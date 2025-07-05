@@ -15,32 +15,23 @@
 import React, { useState, useEffect } from "react";
 import "./../styles/App.css";
 
-// You can store the static array here
 const fruits = ["apple", "banana", "cherry", "date", "elderberry", "fig"];
 
 const App = () => {
-  const [query, setQuery] = useState("");        // input value
-  const [suggestions, setSuggestions] = useState([]); // async filtered results
-  const [loading, setLoading] = useState(false);     // simulate async
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState(fruits); // initially show all
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (query === "") {
-      setSuggestions([]);
-      return;
-    }
-
     setLoading(true);
-
-    // Simulate async call
     const handler = setTimeout(() => {
       const filtered = fruits.filter(item =>
         item.toLowerCase().startsWith(query.toLowerCase())
       );
       setSuggestions(filtered);
       setLoading(false);
-    }, 300); // delay 300ms
+    }, 300);
 
-    // Cleanup on new keystroke
     return () => clearTimeout(handler);
   }, [query]);
 
@@ -63,7 +54,6 @@ const App = () => {
       </ul>
     </div>
   );
-}
+};
 
 export default App;
-
